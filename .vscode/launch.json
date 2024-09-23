@@ -2,7 +2,7 @@
 {
     "version": "0.2.0",
     "configurations": [
-
+        
         {
             "name": "Sandbox Project",
             "type": "coreclr",
@@ -16,6 +16,19 @@
             "stopAtEntry": false
         },
 
+        {
+            "name": "Sandbox_2 Project",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-sandbox-Sandbox_2",
+            "program": "${workspaceFolder}/sandbox/Sandbox_2/bin/Debug/net8.0/Sandbox_2.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/sandbox/Sandbox_2",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "stopAtEntry": false
+        },
+        
         {
             "name": "C# Prep 1",
             "type": "coreclr",

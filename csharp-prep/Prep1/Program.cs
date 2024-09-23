@@ -4,10 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Enter you frist name:");
+        Console.Write("Enter you frist name:");
         string first_name = Console.ReadLine();
 
-        Console.WriteLine("Enter you last name:");
+        Console.Write("Enter you last name:");
         string last_name = Console.ReadLine();
 
         Console.WriteLine();        
