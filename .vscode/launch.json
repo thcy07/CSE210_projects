@@ -3,6 +3,19 @@
     "version": "0.2.0",
     "configurations": [
         
+       {
+            "name": "Sandbox_2 Project",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-sandbox-Sandbox_2",
+            "program": "${workspaceFolder}/sandbox/Sandbox_2/bin/Debug/net8.0/Sandbox_2.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/sandbox/Sandbox_2",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "stopAtEntry": false
+        },
+        
         {
             "name": "Sandbox Project",
             "type": "coreclr",
@@ -17,18 +30,18 @@
         },
 
         {
-            "name": "Sandbox_2 Project",
+            "name": "counter Project",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build-sandbox-Sandbox_2",
-            "program": "${workspaceFolder}/sandbox/Sandbox_2/bin/Debug/net8.0/Sandbox_2.dll",
+            "preLaunchTask": "build-sandbox-counter",
+            "program": "${workspaceFolder}/sandbox/counter/bin/Debug/net8.0/counter.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/sandbox/Sandbox_2",
+            "cwd": "${workspaceFolder}/sandbox/counter",
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
         },
-        
+
         {
             "name": "C# Prep 1",
             "type": "coreclr",
