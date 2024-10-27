@@ -18,7 +18,7 @@ class Menu
             Console.WriteLine("1. Display Scriptures ");
             Console.WriteLine("2. Pick Scripture");
             Console.WriteLine("3. Load Scripture");
-            Console.WriteLine("4. Memorize Scriptures");
+            Console.WriteLine("4. Memorize Scripture");
             Console.WriteLine("5. Quit");
             Console.Write("What would you like to do? ");
  
@@ -38,6 +38,7 @@ class Menu
                     scriptureStore. WriteScriptureToFile(reference, scripture); 
                     break;
                 case "4":
+                    Scripture.LoadRandomScripture();
                     Scripture.MemorizeScripture();
                     break;
                 case "5":

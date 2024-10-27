@@ -4,7 +4,7 @@ using System.IO;
 
 public class Word
 {
-    public string Text { get; }
+    public string Text { get; set; }
     public bool IsHidden { get; private set; }
 
     public Word(string text)

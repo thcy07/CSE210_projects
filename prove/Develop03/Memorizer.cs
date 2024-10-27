@@ -6,7 +6,7 @@ public class Memorizer
 {
     private List<Word> words = new List<Word>();
     private Random random = new Random();
-
+    private static Dictionary<string, string> scriptureLibrary = new Dictionary<string, string>();
     private string scriptureFile = "scriptures.txt";
     private readonly StoreScrpiture sendscripture;
 
@@ -16,36 +16,13 @@ public class Memorizer
         this.sendscripture = memorizer; 
     }
 
-       public void PickScriptures()
+    public void ReadFile()
     {
-        Console.WriteLine("Please enter the reference of the verse you wish to memorize:");
-        string reference = Console.ReadLine();
-
-        using (StreamReader reader = new StreamReader(scriptureFile))
+        if (scriptureLibrary.Count > 0)
         {
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                string[] parts = line.Split('|');
-                if (parts[0] == reference)
-                {
-                    string scripture1 = parts[1];
-                    LoadScripture(reference, scripture1);
-                    return;
-                }
-            }
-
-            Console.WriteLine("Reference not found. Please enter the scripture:");
-            string scripture = Console.ReadLine();
-            sendscripture.WriteScriptureToFile(reference, scripture);
-            LoadScripture(reference, scripture);
+            return; 
         }
-
-    }
-
-    public void LoadScriptureFromFile()
-    {
-        using (StreamReader reader = new StreamReader(scriptureFile))
+         using (StreamReader reader = new StreamReader(scriptureFile))
         {
             string line;
             while ((line = reader.ReadLine()) != null)
@@ -53,20 +30,76 @@ public class Memorizer
                 string[] parts = line.Split('|');
                 string reference = parts[0];
                 string scripture = parts[1];
-                LoadScripture(reference, scripture); 
+                scriptureLibrary.Add(reference, scripture);
+                foreach (var entry in scriptureLibrary)
+                {
+                    Console.WriteLine("Reference: " + entry.Key);
+                    Console.WriteLine("Scripture: " + entry.Value);
+                    Console.WriteLine();
+                }
+                               
             }
         }
     }
 
-    public void LoadScripture(string reference, string scripture)
-    {
-        words.Clear(); 
-        string[] wordsArray = scripture.Split("");
 
-        foreach (string word in wordsArray)
+       public void PickScriptures()
+    {   
+        ReadFile();
+        Console.WriteLine("Please enter the reference of the verse you wish to memorize:");
+        string reference = Console.ReadLine();
+        if (scriptureLibrary.ContainsKey(reference))
         {
-            words.Add(new Word(word));
+            words.Clear(); 
+            string scripture1 = scriptureLibrary[reference];
+            string[] wordsArray = scripture1.Split(' ');
+            Console.WriteLine(wordsArray.Length);
+
+            foreach (string word in wordsArray)
+            {
+                words.Add(new Word(word));
+            }
+            MemorizeScripture();
         }
+        else
+        {
+            Console.WriteLine("Reference not found. Please enter the scripture:");
+            string scripture1 = Console.ReadLine();
+            sendscripture.WriteScriptureToFile(reference, scripture1);
+        }
+        
+    }
+    private string GetRandomScriptureReference()
+    {
+        List<string> keys = new List<string>(scriptureLibrary.Keys);
+        int randomIndex = random.Next(keys.Count);
+        return keys[randomIndex];
+    }
+
+    public void LoadRandomScripture()
+    {
+        if (scriptureLibrary.Count == 0)
+        {
+            Console.WriteLine("No scriptures available in the library.");
+            return;
+        }
+
+        string randomReference = GetRandomScriptureReference();
+        Console.WriteLine(randomReference);
+        if (scriptureLibrary.ContainsKey(randomReference))
+        {
+            words.Clear(); 
+            string scripture1 = scriptureLibrary[randomReference];
+            string[] wordsArray = scripture1.Split(' ');
+            Console.WriteLine(wordsArray.Length);
+
+            foreach (string word in wordsArray)
+            {
+                words.Add(new Word(word));
+            }
+
+        }       
+        
     }
 
     public void MemorizeScripture()
@@ -115,7 +148,8 @@ public class Memorizer
 
     public void HideWords()
     {
-        int numWordsToHide = random.Next(1, words.Count / 2);
+        int numWordsToHide = random.Next(0, words.Count/2);
+        Console.WriteLine(numWordsToHide);
 
         for (int i = 0; i < numWordsToHide; i++)
         {
