@@ -4,6 +4,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop03 World!");
+        StoreScrpiture scriptureStore = new StoreScrpiture();
+        Memorizer scriptureMemorizer = new Memorizer(scriptureStore);
+        Menu menu = new Menu(scriptureMemorizer, scriptureStore);
+        menu.DisplayMenu();
     }
 }
