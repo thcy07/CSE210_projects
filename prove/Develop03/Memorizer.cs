@@ -53,7 +53,7 @@ public class Memorizer
             words.Clear(); 
             string scripture1 = scriptureLibrary[reference];
             string[] wordsArray = scripture1.Split(' ');
-            Console.WriteLine(wordsArray.Length);
+            // Console.WriteLine(wordsArray.Length);
 
             foreach (string word in wordsArray)
             {
@@ -91,7 +91,7 @@ public class Memorizer
             words.Clear(); 
             string scripture1 = scriptureLibrary[randomReference];
             string[] wordsArray = scripture1.Split(' ');
-            Console.WriteLine(wordsArray.Length);
+            // Console.WriteLine(wordsArray.Length);
 
             foreach (string word in wordsArray)
             {
@@ -108,7 +108,7 @@ public class Memorizer
         while (!CompletelyHidden())
         {
             HideWords();
-            Console.WriteLine(GetHiddenText());
+            DisplayWordList();
             Console.WriteLine("Press Enter to hide more words, or any other key to stop memorizing.");
             if (Console.ReadKey(true).Key != ConsoleKey.Enter)
             {
@@ -116,28 +116,21 @@ public class Memorizer
             }
         }
     }
-    public string GetHiddenText()
-    {
-        string hiddenText = "";
+    public void DisplayWordList()
+    {        
         foreach (Word word in words)
         {
-            if (word.IsHidden)
-            {
-                hiddenText += "____ ";
-            }
-            else
-            {
-                hiddenText += word.Text + " ";
-            }
+           Console.Write(word.GetText());
+           Console.Write(" "); 
         }
-        return hiddenText;
+        Console.WriteLine();
     }
 
     public bool CompletelyHidden()
     {
         foreach (Word word in words)
         {
-            if (!word.IsHidden)
+            if (!word.GetIsHidden())
             {
                 return false;
             }
@@ -148,13 +141,21 @@ public class Memorizer
 
     public void HideWords()
     {
-        int numWordsToHide = random.Next(0, words.Count/2);
-        Console.WriteLine(numWordsToHide);
-
-        for (int i = 0; i < numWordsToHide; i++)
+        int count = 0;
+        while (count<3)
         {
-            int randomIndex = random.Next(words.Count);
-            words[randomIndex].Hidden();
+            
+            int numWordsToHide = random.Next(0, words.Count-1);
+
+            if (words[numWordsToHide].GetIsHidden())
+            {
+                numWordsToHide = random.Next(0, words.Count-1);
+            } 
+            else
+            {                
+                words[numWordsToHide].HideWord();
+                count += 1;
+            }
         }
     }
 }

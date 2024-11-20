@@ -4,18 +4,29 @@ using System.IO;
 
 public class Word
 {
-    public string Text { get; set; }
-    public bool IsHidden { get; private set; }
+    private string _text;
+    private bool _isHidden ;
 
     public Word(string text)
     {
-        Text = text;
-        IsHidden = false;
+        _text = text;
+        _isHidden = false;
     }
 
-    public void Hidden()
+    public string GetText()
     {
-        IsHidden = true;
+        return _text;
+    }
+
+    public bool GetIsHidden()
+    {
+        return _isHidden;
+    }
+
+      public void HideWord()
+    {
+        _isHidden = true;
+        _text = "___";
     }
 
 }
