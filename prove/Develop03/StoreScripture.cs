@@ -45,7 +45,7 @@ public class StoreScrpiture
                 string _reference = parts[0];
                 string _scripture = parts[1];
 
-                Console.WriteLine($"{_reference} {_scripture}\n");
+                Console.WriteLine($"{reference} {scripture}\n");
             }
         }
     }
