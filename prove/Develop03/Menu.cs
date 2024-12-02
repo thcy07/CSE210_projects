@@ -14,11 +14,11 @@ class Menu
     {
         while(true)
         {
-            Console.WriteLine("Please select one of the following choices: ");
-            Console.WriteLine("1. Display Scriptures ");
-            Console.WriteLine("2. Pick Scripture");
-            Console.WriteLine("3. Load Scripture");
-            Console.WriteLine("4. Memorize Scripture");
+            Console.WriteLine("\n Please select one of the following choices: ");
+            Console.WriteLine("1. Display All the Scriptures ");
+            Console.WriteLine("2. Pick Scripture to Memorize");
+            Console.WriteLine("3. Load Scripture to File");
+            Console.WriteLine("4. Memorize Random Scripture");
             Console.WriteLine("5. Quit");
             Console.Write("What would you like to do? ");
  
@@ -39,7 +39,6 @@ class Menu
                     break;
                 case "4":
                     Scripture.LoadRandomScripture();
-                    Scripture.MemorizeScripture();
                     break;
                 case "5":
                     return;

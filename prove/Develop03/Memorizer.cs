@@ -9,6 +9,7 @@ public class Memorizer
     private static Dictionary<string, string> scriptureLibrary = new Dictionary<string, string>();
     private string scriptureFile = "scriptures.txt";
     private readonly StoreScrpiture sendscripture;
+    private string currentReference;
 
 
       public Memorizer(StoreScrpiture memorizer) 
@@ -18,26 +19,37 @@ public class Memorizer
 
     public void ReadFile()
     {
-        if (scriptureLibrary.Count > 0)
+        if (scriptureLibrary.Count > 0) // Avoid reloading if already populated
         {
-            return; 
+            return;
         }
-         using (StreamReader reader = new StreamReader(scriptureFile))
+
+        if (!File.Exists(scriptureFile))
+        {
+            Console.WriteLine("No scriptures file found.");
+            return;
+        }
+
+        using (StreamReader reader = new StreamReader(scriptureFile))
         {
             string line;
             while ((line = reader.ReadLine()) != null)
             {
                 string[] parts = line.Split('|');
-                string reference = parts[0];
-                string scripture = parts[1];
-                scriptureLibrary.Add(reference, scripture);
-                foreach (var entry in scriptureLibrary)
+                if (parts.Length == 2) // Ensure proper format
                 {
-                    Console.WriteLine("Reference: " + entry.Key);
-                    Console.WriteLine("Scripture: " + entry.Value);
-                    Console.WriteLine();
+                    string reference = parts[0].Trim();
+                    string scripture = parts[1].Trim();
+
+                    if (!scriptureLibrary.ContainsKey(reference)) // Avoid duplicates
+                    {
+                        scriptureLibrary.Add(reference, scripture);
+                    }
                 }
-                               
+                else
+                {
+                    Console.WriteLine($"Invalid entry in scripture file: {line}");
+                }
             }
         }
     }
@@ -50,6 +62,7 @@ public class Memorizer
         string reference = Console.ReadLine();
         if (scriptureLibrary.ContainsKey(reference))
         {
+            currentReference = reference;
             words.Clear(); 
             string scripture1 = scriptureLibrary[reference];
             string[] wordsArray = scripture1.Split(' ');
@@ -78,6 +91,7 @@ public class Memorizer
 
     public void LoadRandomScripture()
     {
+        ReadFile();
         if (scriptureLibrary.Count == 0)
         {
             Console.WriteLine("No scriptures available in the library.");
@@ -85,7 +99,8 @@ public class Memorizer
         }
 
         string randomReference = GetRandomScriptureReference();
-        Console.WriteLine(randomReference);
+        currentReference = randomReference;
+
         if (scriptureLibrary.ContainsKey(randomReference))
         {
             words.Clear(); 
@@ -98,16 +113,18 @@ public class Memorizer
                 words.Add(new Word(word));
             }
 
+            MemorizeScripture();
         }       
         
     }
 
     public void MemorizeScripture()
     {
-
         while (!CompletelyHidden())
         {
             HideWords();
+            Console.Clear();
+            Console.WriteLine($"Memorizing Scripture: {currentReference}");
             DisplayWordList();
             Console.WriteLine("Press Enter to hide more words, or any other key to stop memorizing.");
             if (Console.ReadKey(true).Key != ConsoleKey.Enter)
@@ -142,20 +159,26 @@ public class Memorizer
     public void HideWords()
     {
         int count = 0;
-        while (count<3)
+        while (count < 3)
         {
-            
-            int numWordsToHide = random.Next(0, words.Count-1);
+            // Get a random word
+            int randomIndex = random.Next(words.Count);
+            Word randomWord = words[randomIndex];
 
-            if (words[numWordsToHide].GetIsHidden())
+            // Check if the word is already hidden
+            if (!randomWord.GetIsHidden())
             {
-                numWordsToHide = random.Next(0, words.Count-1);
-            } 
-            else
-            {                
-                words[numWordsToHide].HideWord();
-                count += 1;
+                randomWord.HideWord();
+                count++;
+            }
+
+            // Break if all words are hidden
+            if (CompletelyHidden())
+            {
+                break;
             }
         }
     }
+
+
 }
