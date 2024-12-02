@@ -3,8 +3,8 @@ using System.IO;
 
 public class StoreScrpiture
 {
-    private string reference;
-    private string scripture;
+    private string _reference;
+    private string _scripture;
     private static readonly string scriptureFile = "scriptures.txt";
     private static readonly Dictionary<string, string> ScriptureRepository = new Dictionary<string, string>(); 
 
@@ -12,19 +12,19 @@ public class StoreScrpiture
     public string GetReference()
     {
         Console.WriteLine("Please enter the reference of the verse you wish to memorize:");
-        reference = Console.ReadLine();
-        return reference;
+        _reference = Console.ReadLine();
+        return _reference;
     }
 
     public string GetScripture()
     {
         Console.WriteLine("Please enter the scripture of the verse you wish to memorize:");
-        scripture = Console.ReadLine();
-        return scripture;
+        _scripture = Console.ReadLine();
+        return _scripture;
     }
-    public void WriteScriptureToFile(string reference, string scripture)
+    public void WriteScriptureToFile(string _reference, string _scripture)
     {
-        string entry = $"{reference}|{scripture}";
+        string entry = $"{_reference}|{_scripture}";
 
         using (StreamWriter writer = File.AppendText(scriptureFile))
         {
@@ -42,10 +42,10 @@ public class StoreScrpiture
             {
                 string[] parts = line.Split('|');
 
-                string reference = parts[0];
-                string scripture = parts[1];
+                string _reference = parts[0];
+                string _scripture = parts[1];
 
-                Console.WriteLine($"{reference} {scripture}");
+                Console.WriteLine($"{_reference} {_scripture}\n");
             }
         }
     }

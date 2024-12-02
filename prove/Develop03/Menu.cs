@@ -2,13 +2,13 @@ using System;
  
 class Menu
 {
-    private Memorizer Scripture;
-    private StoreScrpiture scriptureStore;
+    private Memorizer _scripture;
+    private StoreScrpiture _scriptureStore;
 
-   public Menu(Memorizer scripture, StoreScrpiture scriptureStore)
+   public Menu(Memorizer scripture, StoreScrpiture _scriptureStore)
     {
-        this.Scripture = scripture;
-        this.scriptureStore = scriptureStore;
+        this._scripture = scripture;
+        this._scriptureStore = _scriptureStore;
     }
     public void DisplayMenu()
     {
@@ -27,18 +27,18 @@ class Menu
             switch(choice)
             {
                 case "1":
-                    scriptureStore.DisplayScriptures();
+                    _scriptureStore.DisplayScriptures();
                     break;
                 case "2":
-                    Scripture.PickScriptures();
+                    _scripture.PickScriptures();
                     break;
                 case "3": 
-                    string reference = scriptureStore.GetReference();
-                    string scripture = scriptureStore.GetScripture();
-                    scriptureStore. WriteScriptureToFile(reference, scripture); 
+                    string reference = _scriptureStore.GetReference();
+                    string scripture = _scriptureStore.GetScripture();
+                    _scriptureStore. WriteScriptureToFile(reference, scripture); 
                     break;
                 case "4":
-                    Scripture.LoadRandomScripture();
+                    _scripture.LoadRandomScripture();
                     break;
                 case "5":
                     return;

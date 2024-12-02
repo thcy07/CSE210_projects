@@ -4,33 +4,33 @@ using System.IO;
 
 public class Memorizer
 {
-    private List<Word> words = new List<Word>();
-    private Random random = new Random();
-    private static Dictionary<string, string> scriptureLibrary = new Dictionary<string, string>();
-    private string scriptureFile = "scriptures.txt";
-    private readonly StoreScrpiture sendscripture;
-    private string currentReference;
+    private List<Word> _words = new List<Word>();
+    private Random _random = new Random();
+    private static Dictionary<string, string> _scriptureLibrary = new Dictionary<string, string>();
+    private string _scriptureFile = "scriptures.txt";
+    private readonly StoreScrpiture _sendScripture;
+    private string _currentReference;
 
 
       public Memorizer(StoreScrpiture memorizer) 
     {
-        this.sendscripture = memorizer; 
+        this._sendScripture = memorizer; 
     }
 
     public void ReadFile()
     {
-        if (scriptureLibrary.Count > 0) // Avoid reloading if already populated
+        if (_scriptureLibrary.Count > 0) // Avoid reloading if already populated
         {
             return;
         }
 
-        if (!File.Exists(scriptureFile))
+        if (!File.Exists(_scriptureFile))
         {
             Console.WriteLine("No scriptures file found.");
             return;
         }
 
-        using (StreamReader reader = new StreamReader(scriptureFile))
+        using (StreamReader reader = new StreamReader(_scriptureFile))
         {
             string line;
             while ((line = reader.ReadLine()) != null)
@@ -41,9 +41,9 @@ public class Memorizer
                     string reference = parts[0].Trim();
                     string scripture = parts[1].Trim();
 
-                    if (!scriptureLibrary.ContainsKey(reference)) // Avoid duplicates
+                    if (!_scriptureLibrary.ContainsKey(reference)) // Avoid duplicates
                     {
-                        scriptureLibrary.Add(reference, scripture);
+                        _scriptureLibrary.Add(reference, scripture);
                     }
                 }
                 else
@@ -60,17 +60,17 @@ public class Memorizer
         ReadFile();
         Console.WriteLine("Please enter the reference of the verse you wish to memorize:");
         string reference = Console.ReadLine();
-        if (scriptureLibrary.ContainsKey(reference))
+        if (_scriptureLibrary.ContainsKey(reference))
         {
-            currentReference = reference;
-            words.Clear(); 
-            string scripture1 = scriptureLibrary[reference];
+            _currentReference = reference;
+            _words.Clear(); 
+            string scripture1 = _scriptureLibrary[reference];
             string[] wordsArray = scripture1.Split(' ');
             // Console.WriteLine(wordsArray.Length);
 
             foreach (string word in wordsArray)
             {
-                words.Add(new Word(word));
+                _words.Add(new Word(word));
             }
             MemorizeScripture();
         }
@@ -78,39 +78,39 @@ public class Memorizer
         {
             Console.WriteLine("Reference not found. Please enter the scripture:");
             string scripture1 = Console.ReadLine();
-            sendscripture.WriteScriptureToFile(reference, scripture1);
+            _sendScripture.WriteScriptureToFile(reference, scripture1);
         }
         
     }
     private string GetRandomScriptureReference()
     {
-        List<string> keys = new List<string>(scriptureLibrary.Keys);
-        int randomIndex = random.Next(keys.Count);
+        List<string> keys = new List<string>(_scriptureLibrary.Keys);
+        int randomIndex = _random.Next(keys.Count);
         return keys[randomIndex];
     }
 
     public void LoadRandomScripture()
     {
         ReadFile();
-        if (scriptureLibrary.Count == 0)
+        if (_scriptureLibrary.Count == 0)
         {
             Console.WriteLine("No scriptures available in the library.");
             return;
         }
 
         string randomReference = GetRandomScriptureReference();
-        currentReference = randomReference;
+        _currentReference = randomReference;
 
-        if (scriptureLibrary.ContainsKey(randomReference))
+        if (_scriptureLibrary.ContainsKey(randomReference))
         {
-            words.Clear(); 
-            string scripture1 = scriptureLibrary[randomReference];
+            _words.Clear(); 
+            string scripture1 = _scriptureLibrary[randomReference];
             string[] wordsArray = scripture1.Split(' ');
             // Console.WriteLine(wordsArray.Length);
 
             foreach (string word in wordsArray)
             {
-                words.Add(new Word(word));
+                _words.Add(new Word(word));
             }
 
             MemorizeScripture();
@@ -124,7 +124,7 @@ public class Memorizer
         {
             HideWords();
             Console.Clear();
-            Console.WriteLine($"Memorizing Scripture: {currentReference}");
+            Console.WriteLine($"Memorizing Scripture: {_currentReference}");
             DisplayWordList();
             Console.WriteLine("Press Enter to hide more words, or any other key to stop memorizing.");
             if (Console.ReadKey(true).Key != ConsoleKey.Enter)
@@ -135,7 +135,7 @@ public class Memorizer
     }
     public void DisplayWordList()
     {        
-        foreach (Word word in words)
+        foreach (Word word in _words)
         {
            Console.Write(word.GetText());
            Console.Write(" "); 
@@ -145,7 +145,7 @@ public class Memorizer
 
     public bool CompletelyHidden()
     {
-        foreach (Word word in words)
+        foreach (Word word in _words)
         {
             if (!word.GetIsHidden())
             {
@@ -162,8 +162,8 @@ public class Memorizer
         while (count < 3)
         {
             // Get a random word
-            int randomIndex = random.Next(words.Count);
-            Word randomWord = words[randomIndex];
+            int randomIndex = _random.Next(_words.Count);
+            Word randomWord = _words[randomIndex];
 
             // Check if the word is already hidden
             if (!randomWord.GetIsHidden())
