@@ -37,19 +37,19 @@ class Program
         // Print order details
         Console.WriteLine("Order 1:");
         Console.WriteLine(order1.GetPackingLabel());
-        Console.WriteLine($"Total Cost: ${order1.CalculateTotalCost()}");
+        Console.WriteLine($"Total Cost: ${order1.CalculateTotalCost()}\n");
         Console.WriteLine(order1.GetShippingLabel());
         Console.WriteLine();
 
         Console.WriteLine("Order 2:");
         Console.WriteLine(order2.GetPackingLabel());
-        Console.WriteLine($"Total Cost: ${order2.CalculateTotalCost()}");
+        Console.WriteLine($"Total Cost: ${order2.CalculateTotalCost()}\n");
         Console.WriteLine(order2.GetShippingLabel());
         Console.WriteLine();
 
         Console.WriteLine("Order 3:");
         Console.WriteLine(order3.GetPackingLabel());
-        Console.WriteLine($"Total Cost: ${order3.CalculateTotalCost()}");
+        Console.WriteLine($"Total Cost: ${order3.CalculateTotalCost()}\n");
         Console.WriteLine(order3.GetShippingLabel());
 
         
