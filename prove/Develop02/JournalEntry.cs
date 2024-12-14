@@ -4,11 +4,11 @@ using System.Linq;
 
  
 public class JournalEntry{
-    public string DateString { get; set; } = DateTime.Now.ToString();
-    public string Prompt { get; set; }
-    public string Challenge{ get; set; }
-    public string ChallengeResponse { get; set; } 
-    public string Response { get; set; }
+    public string DateString;
+    public string Prompt ;
+    public string Challenge;
+    public string ChallengeResponse ;
+    public string Response ;
     
 
 
