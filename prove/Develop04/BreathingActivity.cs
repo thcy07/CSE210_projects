@@ -9,7 +9,7 @@ public class BreathingActivity : Activity
 
     }
 
-    public void Excecute()
+    public void Execute()
     {
        DisplayStartMsg();
        int duration = SetDuration();
